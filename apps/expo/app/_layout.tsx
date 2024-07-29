@@ -3,7 +3,7 @@ import { useColorScheme } from 'react-native'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
-import { Provider } from 'app/provider'
+import { Provider } from 'app/providers'
 import { NativeToast } from '@my/ui/src/NativeToast'
 
 export const unstable_settings = {

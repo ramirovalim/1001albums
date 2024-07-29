@@ -1,10 +1,16 @@
 import { createTamagui } from 'tamagui'
 import { createInterFont } from '@tamagui/font-inter'
 import { shorthands } from '@tamagui/shorthands'
-import { tokens, themes } from '@tamagui/config/v3'
+import * as themesIn from './themes'
+import { tokens } from '@tamagui/config/v3'
 import { createMedia } from '@tamagui/react-native-media-driver'
-
 import { animations } from '@my/ui/src/animations'
+
+// TAMAGUI_IS_SERVER is set by @tamagui/next-plugin
+const themes =
+  process.env.TAMAGUI_IS_SERVER || process.env.NODE_ENV !== 'production'
+    ? themesIn
+    : ({} as typeof themesIn)
 
 const headingFont = createInterFont({
   size: {

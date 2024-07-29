@@ -5,6 +5,7 @@ import {
   Paragraph,
   Separator,
   Sheet,
+  Image,
   useToastController,
   SwitchThemeButton,
   XStack,
@@ -52,6 +53,13 @@ export function HomeScreen() {
         </Paragraph>
         <Separator />
       </YStack>
+      {/* <Image
+        source={{
+          uri: "https://i.discogs.com/IQk6ZF33qw1jVG74af1FvbspBYLl8LnM3NvTkkTQ4g8/rs:fit/g:sm/q:90/h:598/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzOTcz/ODQtMTUzOTgwODE5/Ny04NzIzLmpwZWc.jpeg",
+          width: 600,
+          height: 598,
+        }}
+      /> */}
 
       <Button {...linkProps}>Link to album</Button>
 

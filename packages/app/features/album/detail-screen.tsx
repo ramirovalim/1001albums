@@ -2,7 +2,7 @@ import { Button, Paragraph, YStack } from '@my/ui'
 import { ChevronLeft } from '@tamagui/lucide-icons'
 import { useParams, useRouter } from 'solito/navigation'
 
-export function UserDetailScreen() {
+export function AlbumDetailScreen() {
   const router = useRouter()
   const { id } = useParams()
 

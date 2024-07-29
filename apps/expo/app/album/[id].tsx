@@ -1,4 +1,4 @@
-import { UserDetailScreen } from 'app/screens/user/detail-screen'
+import { AlbumDetailScreen } from 'app/features/album/detail-screen'
 import { Stack } from 'expo-router'
 import { useTheme } from '@my/ui'
 
@@ -16,7 +16,7 @@ export default function Screen() {
           gestureDirection: 'horizontal',
         }}
       />
-      <UserDetailScreen />
+      <AlbumDetailScreen />
     </>
   )
 }

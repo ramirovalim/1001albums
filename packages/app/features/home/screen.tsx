@@ -16,7 +16,7 @@ import { Platform } from 'react-native'
 import { useLink } from 'solito/navigation'
 
 export function HomeScreen() {
-  const linkTarget = '/user'
+  const linkTarget = '/album'
   const linkProps = useLink({
     href: `${linkTarget}/nate`,
   })
@@ -53,7 +53,7 @@ export function HomeScreen() {
         <Separator />
       </YStack>
 
-      <Button {...linkProps}>Link to user</Button>
+      <Button {...linkProps}>Link to album</Button>
 
       <SheetDemo />
     </YStack>

@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "@my/ui": "0.0.1",
+    "@prisma/client": "5.17.0",
     "@react-navigation/native": "^6.1.17",
     "@tamagui/animations-react-native": "^1.105.2",
     "@tamagui/colors": "^1.105.2",

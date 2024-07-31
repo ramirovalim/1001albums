@@ -2537,6 +2537,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/client@npm:5.17.0":
+  version: 5.17.0
+  resolution: "@prisma/client@npm:5.17.0"
+  peerDependencies:
+    prisma: "*"
+  peerDependenciesMeta:
+    prisma:
+      optional: true
+  checksum: 10/b6ee1cf6b43d3f0aa4cfd7977bf53e57ad68863875c97b09b15c6abc6c69e57afc99076e9e5390e4ea3d5777a8aeb6bbb92755ee6d165d77d741295c9dbe214f
+  languageName: node
+  linkType: hard
+
 "@prisma/debug@npm:5.17.0":
   version: 5.17.0
   resolution: "@prisma/debug@npm:5.17.0"
@@ -5759,6 +5771,7 @@ __metadata:
   resolution: "app@workspace:packages/app"
   dependencies:
     "@my/ui": "npm:0.0.1"
+    "@prisma/client": "npm:5.17.0"
     "@react-navigation/native": "npm:^6.1.17"
     "@tamagui/animations-react-native": "npm:^1.105.2"
     "@tamagui/colors": "npm:^1.105.2"

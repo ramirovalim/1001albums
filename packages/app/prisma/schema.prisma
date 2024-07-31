@@ -1,14 +1,137 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
+// SUPABASE
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Album {
+  id           Int     @id @default(autoincrement())
+  discogsId    Int     @unique @map("discogs_id")
+  displayTitle String  @map("display_title")
+  resourceUrl  String  @map("resource_url")
+  imageUrl     String  @map("image_url")
+  stats        Json
+  type         String
+  comment      String?
+  uri          String?
+  listened     Boolean @default(false)
+  rating       Int     @default(0)
+
+  albumInfo AlbumInfo?
+
+  @@map("albums")
+}
+
+model AlbumInfo {
+  id                   Int              @id @default(autoincrement())
+  discogsId            Int              @unique @map("discogs_id")
+  title                String
+  year                 Int
+  images               Image[]
+  artists              ArtistsOnAlbum[]
+  trackList            Track[]
+  genres               String[]
+  styles               String[]
+  uri                  String
+  numForSale           Int              @map("num_for_sale")
+  lowestPrice          Float            @map("lowest_price")
+  notes                String
+  videos               Video[]
+  resourceUrl          String           @map("resource_url")
+  mainRelease          Int              @map("main_release")
+  mainReleaseUrl       String           @map("main_release_url")
+  mostRecentRelease    Int              @map("most_recent_release")
+  mostRecentReleaseUrl Int              @map("most_recent_release_url")
+  versionsUrl          String           @map("versions_url")
+  dataQuality          String           @map("data_quality")
+
+  album Album @relation(fields: [discogsId], references: [discogsId], onDelete: Cascade)
+
+  @@map("album-infos")
+}
+
+model Image {
+  id          Int    @id @default(autoincrement())
+  type        String
+  uri         String
+  resourceUrl String @map("resource_url")
+  uri150      String
+  width       Int
+  height      Int
+
+  album AlbumInfo @relation(fields: [id], references: [id])
+
+  @@map("images")
+}
+
+model Artist {
+  id          Int              @id @default(autoincrement())
+  discogsId   Int              @unique @map("discogs_id")
+  name        String
+  anv         String
+  join        String
+  role        String
+  tracks      String
+  resourceUrl String           @map("resource_url")
+  albums      ArtistsOnAlbum[]
+
+  @@map("artists")
+}
+
+model Track {
+  id           Int                @id @default(autoincrement())
+  position     String
+  type         String
+  title        String
+  duration     String
+  extraArtists FeaturingArtists[]
+
+  AlbumInfo   AlbumInfo? @relation(fields: [albumInfoId], references: [id])
+  albumInfoId Int?
+
+  @@map("tracks")
+}
+
+model ArtistsOnAlbum {
+  artist          Artist    @relation(fields: [artistDiscogsId], references: [discogsId])
+  artistDiscogsId Int       @unique @map("artist_discogs_id")
+  album           AlbumInfo @relation(fields: [albumDiscogsId], references: [discogsId])
+  albumDiscogsId  Int       @unique @map("album_discogs_id")
+
+  @@id([artistDiscogsId, albumDiscogsId])
+  @@map("artists-on-album")
+}
+
+model FeaturingArtists {
+  name        String
+  anv         String
+  join        String
+  role        String
+  tracks      String
+  discogsId   Int    @map("id")
+  resourceUrl String @map("resource-url")
+
+  Track   Track? @relation(fields: [trackId], references: [id])
+  trackId Int?
+
+  @@unique([discogsId])
+  @@map("feat-artists")
+}
+
+model Video {
+  uri         String
+  title       String
+  description String
+  duration    Float
+  embed       Boolean
+  AlbumInfo   AlbumInfo? @relation(fields: [albumInfoId], references: [id])
+  albumInfoId Int?
+
+  @@unique([uri])
+  @@map("videos")
 }

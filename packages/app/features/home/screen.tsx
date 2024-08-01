@@ -7,6 +7,7 @@ import {
   Sheet,
   Image,
   useToastController,
+  Spinner,
   SwitchThemeButton,
   XStack,
   YStack,
@@ -15,12 +16,34 @@ import { ChevronDown, ChevronUp, X } from '@tamagui/lucide-icons'
 import { useState } from 'react'
 import { Platform } from 'react-native'
 import { useLink } from 'solito/navigation'
+import { fetchDiscogsData } from '../../services/discogs'
+import { AllAlbums } from 'packages/app/lib/types/albums'
 
 export function HomeScreen() {
   const linkTarget = '/album'
   const linkProps = useLink({
     href: `${linkTarget}/nate`,
   })
+
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState<AllAlbums | undefined>(undefined)
+  const toast = useToastController()
+
+  const handleClick = async () => {
+    try {
+      setLoading(true)
+      const response = await fetchDiscogsData()
+      console.log("Response:", response)
+      setData(response.display_title)
+      toast.show('Success!', { message: 'Data fetched successfully', color: '$color12' })
+    } catch (error) {
+      console.error('Failed to fetch data from Discogs:', error)
+      toast.show('Oops...', { message: 'Failed to fetch data from Discogs', color: '$color12' })
+      throw new Error('Failed to fetch data from Discogs:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <YStack f={1} jc="center" ai="center" gap="$8" p="$4" bg="$background">
@@ -39,18 +62,12 @@ export function HomeScreen() {
           </>
         )}
       </XStack>
-
       <YStack gap="$4">
         <H1 ta="center" col="$color12">
           Welcome to Tamagui.
         </H1>
-        <Paragraph col="$color10" ta="center">
-          Here's a basic starter to show navigating from one screen to another.
-        </Paragraph>
-        <Separator />
-        <Paragraph ta="center">
-          This screen uses the same code on Next.js and React Native.
-        </Paragraph>
+        <Button onPress={() => handleClick()}>{loading ? <Spinner /> : 'Fetch Data'}</Button>
+        {data && <Paragraph>{data}</Paragraph>}
         <Separator />
       </YStack>
       {/* <Image
@@ -59,10 +76,8 @@ export function HomeScreen() {
           width: 600,
           height: 598,
         }}
-      /> */}
-
       <Button {...linkProps}>Link to album</Button>
-
+      /> */}
       <SheetDemo />
     </YStack>
   )
@@ -97,11 +112,11 @@ function SheetDemo() {
         <Sheet.Frame ai="center" jc="center" gap="$10" bg="$color2">
           <XStack gap="$2">
             <Paragraph ta="center">Made by</Paragraph>
-            <Anchor col="$blue10" href="https://twitter.com/natebirdman" target="_blank">
+            <Anchor href="https://twitter.com/natebirdman" target="_blank">
               @natebirdman,
             </Anchor>
             <Anchor
-              color="$purple10"
+              // color="$purple10"
               href="https://github.com/tamagui/tamagui"
               target="_blank"
               rel="noreferrer"
@@ -126,3 +141,26 @@ function SheetDemo() {
     </>
   )
 }
+
+// const fetchDiscogsData = async () => {
+//   const userAgent = '@ramiro-1001albums-app/v1.0'
+//   const consumerKey = process.env.DISCOGS_CONSUMER_KEY
+//   const consumerSecret = process.env.DISCOGS_CONSUMER_SECRET
+//   const allAlbumsBaseUrl = 'https://api.discogs.com/lists/991847'
+//   const albumInfoBaseUrl = 'https://api.discogs.com/masters/'
+
+//   try {
+//     const response = await fetch(allAlbumsBaseUrl, {
+//       headers: {
+//         'User-Agent': userAgent,
+//         Authorization: `Discogs key=${consumerKey}, secret=${consumerSecret}`,
+//       },
+//     })
+//     const data = await response.json()
+//     //console.log(data)
+//     return data
+//   } catch (error) {
+//     console.error('Failed to fetch data from Discogs:', error)
+//     throw error
+//   }
+// }

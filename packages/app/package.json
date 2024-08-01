@@ -6,6 +6,12 @@
   "sideEffects": [
     "*.css"
   ],
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "scripts": {
+    "migrate-db-dev": "yarn prisma migrate dev --skip-seed"
+  },
   "dependencies": {
     "@my/ui": "0.0.1",
     "@prisma/client": "5.17.0",

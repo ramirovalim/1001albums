@@ -1,24 +1,55 @@
-export interface Album {
-  id: number
-  main_release: number
-  most_recent_release: number
-  resource_url: string
-  uri: string
-  versions_url: string
-  main_release_url: string
-  most_recent_release_url: string
-  num_for_sale: number
-  lowest_price: number
+export interface AlbumInfo {
+  id?: number
+  discogsId: number
+  title: string
+  year: number
   images: Image[]
+  artists: Artist[]
+  trackList: Track[]
   genres: string[]
   styles: string[]
-  year: number
-  tracklist: Tracklist[]
-  artists: Extraartist[]
-  title: string
-  notes: string
-  data_quality: string
+  uri: string
+  numForSale: number
+  lowestPrice: number
+  notes?: string
   videos: Video[]
+  resourceUrl: string
+  mainRelease: number
+  mainReleaseUrl: string
+  mostRecentRelease: number
+  mostRecentReleaseUrl: string
+  versionsUrl: string
+  dataQuality: string
+}
+export interface Image {
+  id?: number
+  type: string
+  uri: string
+  resourceUrl: string
+  uri150: string
+  width: number
+  height: number
+}
+
+export interface Artist {
+  id?: number
+  discogsId: number
+  name: string
+  anv: string
+  join: string
+  role: string
+  tracks: string
+  resourceUrl: string
+}
+
+export interface Track {
+  id?: number
+  position: string
+  type: string
+  title: string
+  duration: string
+  extraArtists?: Artist[]
+  albumInfoId?: number
 }
 
 export interface Video {
@@ -27,31 +58,6 @@ export interface Video {
   description: string
   duration: number
   embed: boolean
+  albumInfoId?: number
 }
 
-export interface Tracklist {
-  position: string
-  type_: string
-  title: string
-  extraartists: Extraartist[]
-  duration: string
-}
-
-export interface Extraartist {
-  name: string
-  anv: string
-  join: string
-  role: string
-  tracks: string
-  id: number
-  resource_url: string
-}
-
-export interface Image {
-  type: string
-  uri: string
-  resource_url: string
-  uri150: string
-  width: number
-  height: number
-}

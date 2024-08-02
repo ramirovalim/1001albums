@@ -1,16 +1,23 @@
+import { AlbumInfo } from './album-infos'
+
 export interface AllAlbums {
   albums: Album[]
 }
 
 export interface Album {
-  type: string
   id: number
-  comment: string
-  uri: string
-  resource_url: string
-  image_url: string
-  display_title: string
+  discogsId: number
+  displayTitle: string
+  resourceUrl: string
+  imageUrl?: string
   stats: Stats
+  type: string
+  comment?: string
+  uri: string
+  listened: boolean
+  rating: number
+
+  albumInfo?: AlbumInfo
 }
 
 export interface Stats {

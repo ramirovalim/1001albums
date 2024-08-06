@@ -19,6 +19,8 @@ import { useLink } from 'solito/navigation'
 import { fetchDiscogsData } from '../../services/discogs'
 import { AllAlbums } from 'packages/app/lib/types/albums'
 
+const test = process.env.DISCOGS_CONSUMER_KEY || 'No key'
+
 export function HomeScreen() {
   const linkTarget = '/album'
   const linkProps = useLink({
@@ -66,6 +68,9 @@ export function HomeScreen() {
         <H1 ta="center" col="$color12">
           Welcome to Tamagui.
         </H1>
+        <Paragraph ta="center" col="$color12">
+          Test: {test}
+        </Paragraph>
         <Button onPress={() => handleClick()}>{loading ? <Spinner /> : 'Fetch Data'}</Button>
         {data && <Paragraph>{data}</Paragraph>}
         <Separator />
